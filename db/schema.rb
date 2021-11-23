@@ -10,12 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_234932) do
+ActiveRecord::Schema.define(version: 2021_11_23_004046) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "recipeingredients", force: :cascade do |t|
+    t.integer "recipe_id", null: false
+    t.integer "ingredient_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "unit"
+    t.index ["ingredient_id"], name: "index_recipeingredients_on_ingredient_id"
+    t.index ["recipe_id"], name: "index_recipeingredients_on_recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -29,5 +46,17 @@ ActiveRecord::Schema.define(version: 2021_11_22_234932) do
     t.index ["category_id"], name: "index_recipes_on_category_id"
   end
 
+  create_table "recipesteps", force: :cascade do |t|
+    t.integer "recipe_id", null: false
+    t.integer "step_number"
+    t.text "direction"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recipe_id"], name: "index_recipesteps_on_recipe_id"
+  end
+
+  add_foreign_key "recipeingredients", "ingredients"
+  add_foreign_key "recipeingredients", "recipes"
   add_foreign_key "recipes", "categories"
+  add_foreign_key "recipesteps", "recipes"
 end
