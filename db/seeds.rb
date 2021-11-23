@@ -5,9 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-Category.destroy_all
+Recipestep.destroy_all
+Recipeingredient.destroy_all
+Ingredient.destroy_all
 Recipe.destroy_all
+Category.destroy_all
 
 #These categories should be seeded in production
 breakfast = Category.create(name: "Breakfast")
@@ -20,4 +22,7 @@ beverage = Category.create(name: "Beverage")
 misc = Category.create(name: "Miscellaneous")
 
 #test recipe
-Recipe.create(name:"scrambled eggs",cooktime:20,category:breakfast)
+recipe = Recipe.create(name:"scrambled eggs",cooktime:20,category:breakfast)
+ingredient = Ingredient.create(name: "egg")
+quantity = Recipeingredient.create(recipe:recipe,ingredient:ingredient,quantity:3,unit:"eggs")
+step = Recipestep.create(step_number:1,direction:"break some eggs",recipe:recipe)
