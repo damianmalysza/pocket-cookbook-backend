@@ -19,3 +19,5 @@ dessert = Category.create(name: "Dessert")
 beverage = Category.create(name: "Beverage")
 misc = Category.create(name: "Miscellaneous")
 
+#test recipe
+Recipe.create(name:"scrambled eggs",cooktime:20,category:breakfast)
