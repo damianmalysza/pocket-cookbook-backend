@@ -9,11 +9,13 @@
 Category.destroy_all
 Recipe.destroy_all
 
-Category.create(name: "Breakfast")
-Category.create(name: "Soup")
-Category.create(name: "Sauce")
-Category.create(name: "Appetizer")
-Category.create(name: "Entree")
-Category.create(name: "Dessert")
-Category.create(name: "Beverage")
-Category.create(name: "Miscellaneous")
+#These categories should be seeded in production
+breakfast = Category.create(name: "Breakfast")
+soup = Category.create(name: "Soup")
+sauce = Category.create(name: "Sauce")
+appetizer = Category.create(name: "Appetizer")
+entree = Category.create(name: "Entree")
+dessert = Category.create(name: "Dessert")
+beverage = Category.create(name: "Beverage")
+misc = Category.create(name: "Miscellaneous")
+
