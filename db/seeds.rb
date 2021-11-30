@@ -25,12 +25,14 @@ beverage = Category.create(name: "Beverage")
 misc = Category.create(name: "Miscellaneous")
 
 #test recipe
-500.times do 
+100.times do 
   recipe = Recipe.create(name: Faker::Food.dish, cooktime: rand(1..300), preptime: rand(1..300), servings: rand(1..12),category: Category.all.sample)
-  ingredient = Ingredient.create_or_find_by(name: Faker::Food.ingredient)
-  quantity = Recipeingredient.create(recipe:recipe,ingredient:ingredient,quantity:rand(1..10),unit:Faker::Food.metric_measurement)
+  rand(1..15).times do
+    ingredient = Ingredient.create_or_find_by(name: Faker::Food.ingredient)
+    quantity = Recipeingredient.create(recipe:recipe,ingredient:ingredient,quantity:rand(1..10),unit:Faker::Food.metric_measurement)
+  end
   rand(1..15).times do |count|
-    Recipestep.create(step_number:count,direction:Faker::Lorem.sentence(word_count:rand(5..20)),recipe:recipe)
+    Recipestep.create(step_number:count + 1,direction:Faker::Lorem.sentence(word_count:rand(5..20)),recipe:recipe)
   end
 end
 # recipe = Recipe.create(name:"scrambled eggs",cooktime:20,category:breakfast)
