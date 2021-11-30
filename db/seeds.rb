@@ -25,7 +25,7 @@ beverage = Category.create(name: "Beverage")
 misc = Category.create(name: "Miscellaneous")
 
 #test recipe
-50.times do 
+100.times do 
   recipe = Recipe.create(name: Faker::Food.dish, cooktime: rand(1..300), preptime: rand(1..300), servings: rand(1..12),category: Category.all.sample)
   rand(1..15).times do
     ingredient = Ingredient.create_or_find_by(name: Faker::Food.ingredient)
