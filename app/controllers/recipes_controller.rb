@@ -13,10 +13,6 @@ class RecipesController < ApplicationController
     
   end
   
-  def update
-    
-  end
-  
   def destroy
     recipe = Recipe.find(params[:id])
     if recipe
