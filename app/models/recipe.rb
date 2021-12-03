@@ -18,7 +18,7 @@ class Recipe < ApplicationRecord
     params[:ingredients].each do |ingredient|
       new_ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
       # if new_ingredient.save 
-        quantity = Recipeingredient.create(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
+        quantity = Recipeingredient.new(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
       # else
         # return new_ingredient
       # end
