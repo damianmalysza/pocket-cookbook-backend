@@ -2,6 +2,9 @@ class Recipeingredient < ApplicationRecord
   belongs_to :recipe
   belongs_to :ingredient
 
+  validates :quantity, presence: true
+  validates :quantity, numericality: {only_integer: true}
+
   def ingredient_name
     self.ingredient.name
   end

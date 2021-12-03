@@ -17,13 +17,17 @@ class Recipe < ApplicationRecord
     recipe = Recipe.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
     params[:ingredients].each do |ingredient|
       new_ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
-      quantity = Recipeingredient.create(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
+      # if new_ingredient.save 
+        quantity = Recipeingredient.create(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
+      # else
+        # return new_ingredient
+      # end
     end
 
     params[:directions].each do |direction|
       Recipestep.create(step_number:direction[:step_number],direction:direction[:direction],recipe:recipe)
     end
-
+    # binding.pry
     recipe.save
     recipe
   end
