@@ -10,7 +10,8 @@ class RecipesController < ApplicationController
   end
   
   def create
-    
+    recipe = Recipe.create_from_site_form(params)
+    binding.pry
   end
   
   def destroy
