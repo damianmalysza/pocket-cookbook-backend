@@ -14,6 +14,7 @@ class Recipe < ApplicationRecord
 
   def self.create_from_site_form(params)
     category = Category.find_by(name: params[:category])
+    
     recipe = Recipe.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
     params[:ingredients].each do |ingredient|
       new_ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
