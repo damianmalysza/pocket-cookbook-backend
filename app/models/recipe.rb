@@ -8,8 +8,8 @@ class Recipe < ApplicationRecord
     category = Category.find_by(name: params[:category])
     recipe = Recipe.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
     params[:ingredients].each do |ingredient|
-      ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
-      quantity = Recipeingredient.create(recipe:recipe,ingredient:ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
+      new_ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
+      quantity = Recipeingredient.create(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
     end
 
     params[:directions].each do |direction|

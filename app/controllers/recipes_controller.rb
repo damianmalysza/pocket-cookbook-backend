@@ -11,7 +11,11 @@ class RecipesController < ApplicationController
   
   def create
     recipe = Recipe.create_from_site_form(params)
-    binding.pry
+    if recipe.save
+      render json: RecipeSerializer.new(recipe)
+    else
+      render json:{ :errors => recipe.errors.full_messages }
+    end 
   end
   
   def destroy
@@ -20,10 +24,10 @@ class RecipesController < ApplicationController
       if recipe.destroy
         head :no_content
       else
-        render :json => { :errors => recipe.errors.full_messages }
+        render json: { :errors => recipe.errors.full_messages }
       end
     else
-      render :json => { :errors => recipe.errors.full_messages }
+      render json: { :errors => recipe.errors.full_messages }
     end
   end
   
