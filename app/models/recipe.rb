@@ -4,6 +4,11 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipeingredients
   has_many :recipesteps, :dependent => :destroy
 
+  validates :name, presence: true
+  validates :preptime, presence: true
+  validates :cooktime, presence: true
+  validates :servings, presence: true
+
   def self.create_from_site_form(params)
     category = Category.find_by(name: params[:category])
     recipe = Recipe.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
