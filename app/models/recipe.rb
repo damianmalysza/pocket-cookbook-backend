@@ -8,6 +8,9 @@ class Recipe < ApplicationRecord
   validates :preptime, presence: true
   validates :cooktime, presence: true
   validates :servings, presence: true
+  validates :preptime, numericality: {only_integer: true}
+  validates :cooktime, numericality: {only_integer: true}
+  validates :servings, numericality: {only_integer: true}
 
   def self.create_from_site_form(params)
     category = Category.find_by(name: params[:category])
