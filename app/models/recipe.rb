@@ -15,12 +15,12 @@ class Recipe < ApplicationRecord
   def self.create_from_site_form(params)
     category = Category.find_by(name: params[:category])
     recipe = Recipe.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
-    if recipe.save
+    if recipe.valid?
       params[:ingredients].each do |ingredient|
         new_ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
-        if new_ingredient.save 
+        if new_ingredient.valid? 
           quantity = Recipeingredient.new(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
-          if !quantity.save
+          if !quantity.valid?
             return quantity
           end
         else
@@ -33,7 +33,7 @@ class Recipe < ApplicationRecord
     
     params[:directions].each do |direction|
       step = Recipestep.new(step_number:direction[:step_number],direction:direction[:direction],recipe:recipe)
-      if !step.save
+      if !step.valid?
         return step
       end
     end
