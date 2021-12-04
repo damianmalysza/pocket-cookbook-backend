@@ -14,12 +14,12 @@ class Recipe < ApplicationRecord
   
   def self.create_from_site_form(params)
     category = Category.find_by(name: params[:category])
-    recipe = Recipe.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
+    recipe = self.new(name: params[:name], cooktime:params[:cooktime], preptime:params[:preptime],servings:params[:servings], category: category)
     if recipe.valid?
       params[:ingredients].each do |ingredient|
         new_ingredient = Ingredient.find_or_create_by(name:ingredient[:ingredient])
         if new_ingredient.valid? 
-          quantity = Recipeingredient.new(recipe:recipe,ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
+          quantity = recipe.recipeingredients.build(ingredient:new_ingredient,quantity:ingredient[:quantity],unit:ingredient[:unit])
           if !quantity.valid?
             return quantity
           end
@@ -27,17 +27,16 @@ class Recipe < ApplicationRecord
           return new_ingredient
         end
       end
-    else 
+
+      params[:directions].each do |direction|
+        step = recipe.recipesteps.build(step_number:direction[:step_number],direction:direction[:direction])
+        if !step.valid?
+          return step
+        end
+      end
+    else
       return recipe
     end
-    
-    params[:directions].each do |direction|
-      step = Recipestep.new(step_number:direction[:step_number],direction:direction[:direction],recipe:recipe)
-      if !step.valid?
-        return step
-      end
-    end
-    # binding.pry
     recipe.save
     recipe
   end
