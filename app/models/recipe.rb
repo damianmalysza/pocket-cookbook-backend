@@ -32,7 +32,10 @@ class Recipe < ApplicationRecord
     end
     
     params[:directions].each do |direction|
-      Recipestep.create(step_number:direction[:step_number],direction:direction[:direction],recipe:recipe)
+      step = Recipestep.new(step_number:direction[:step_number],direction:direction[:direction],recipe:recipe)
+      if !step.save
+        return step
+      end
     end
     # binding.pry
     recipe.save
